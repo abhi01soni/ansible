@@ -1,0 +1,19 @@
+---
+- name: installation of Apache server, also adding a webpage and starting the apache service
+  hosts: all
+  tasks:
+  - name: Installation of Apache package 
+    yum:
+      name: httpd
+      state: present 
+
+  - name: Creating a webpage 
+    copy:
+      content: "Hello Abrar, How are you " 
+      dest: /var/www/html/index.html
+
+  - name: Starting the apache service 
+    service:
+      name: httpd
+      state: started 
+      enabled: true
