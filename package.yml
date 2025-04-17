@@ -1,0 +1,36 @@
+---
+- name: Installing the vsftpd and starting its services also adding the service and port in firewall
+  hosts: all
+  tasks:
+  - name: installing VSFTPD package
+    yum:
+      name: vsftpd
+      state: present
+  
+  - name: starting the service of vsftpd 
+    service: 
+      name: vsftpd
+      state: started
+      enabled: true
+     
+  - name: starting the service via firewalld
+    service:
+      name: firewalld
+      state: started
+      enabled: true
+   
+  - name: Allow ftp service vis firewalld
+    firewalld:
+      service: ftp 
+      permanent: true
+      state: enabled
+      immediate: true
+  
+  - name: Assigning the port number 
+    firewalld:
+      port: 21/tcp
+      permanent: true
+      state: enabled
+      immediate: true
+
+
